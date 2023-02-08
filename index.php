@@ -12,14 +12,11 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
         <!--Weather Icon--> 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css">
-        <!--Font Awesome-->
-        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css">
         <style type="text/css">
             body{
                 background-image: url("img/background.jpeg");
                 margin: O auto;
-                color: white;
-                overflow: hidden;
+                color: white;   
                 display: fixed;
             }
             .hero {
@@ -48,6 +45,7 @@
                 background-image: url("img/currentWeather.jpeg");
                 border-radius: 10px;
             }
+            
 
         </style>
     </head>
@@ -72,14 +70,12 @@
                 <div class="row">
                 <?php
 
-                    $url = 'cities.json'; // path to your JSON file
-                    $data = file_get_contents($url); // put the contents of the file into a variable
-                    $characters = json_decode($data,true); // decode the JSON feed
-                    //echo(count($characters['List']));
+                    include ('getCitiesData.php');
 
                     for($i=0;$i<count($characters['List']);$i++){
-                        $response = file_get_contents("https://samples.openweathermap.org/data/2.5/group?id=".$characters['List'][$i]['CityCode']."&units=metric&appid=439d4b804bc8187953eb36d2a8c26a02");
-                        
+
+                        include ('getOpenWeatherMapData.php');
+                        if($response!=""){
                         $data = json_decode($response);
                         $data=(array)$data;
                         $data=(array)$data['list'][0];
@@ -124,7 +120,7 @@
                         </div>
                       </div>
                     </div>
-                    <?php } ?>
+                    <?php }} ?>
             </div>
         </div>
     </body>
